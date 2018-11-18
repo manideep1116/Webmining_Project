@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 
-page_url = 'https://www.yelp.com/search?cflt=restaurants&find_loc=San%20Jose%2C%20CA&start=0'
-save_file = '/home/manideep/Downloads/webmining_project/myfile1'
+page_url = 'https://www.yelp.com/search?cflt=restaurants&find_loc=New%20York%2C%20NY&start=0'
+save_file = '/home/manideep/Downloads/webmining_project/nyc'
 
 # return next possible yelp page.  If beginning page, don't do anything
 def next_page(i, page_url):
@@ -23,11 +23,11 @@ while True:
     # parse HTML
     soup = BeautifulSoup(resp.content) 
     # find ALL hrefs in page
-    hrefs = set(soup.find_all('a', href=True))
+    hrefs = list(soup.find_all('a', href=True))
     # filter those hrefs which start with '/biz'
     rests = filter(lambda x: x['href'].startswith('/biz'), hrefs)
     # add url to the href's found
-    values = map(lambda x: 'https://www.yelp.com' + x['href'], rests)
+    values = list(map(lambda x: 'https://www.yelp.com' + x['href'], rests))
 
     if len(values) == 0:
         print("You can stop now...")
