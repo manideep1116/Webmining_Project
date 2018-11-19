@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Nov  3 16:56:17 2018
+Created on Sun Nov 18 11:52:24 2018
 
-@author: abhis
+@author: Deep Chitroda
 """
 
 from bs4 import BeautifulSoup
@@ -12,11 +12,9 @@ import requests
 
 def run(line,a):
     
-    
-    f=open('gfk_'+str(a)+'.txt','w') # output file
+    f=open('rest'+str(a)+'.txt','w') # output file
 	        
     html=None
-
     pageLink=line 
     print(pageLink) # url for page 1       
     for i in range(5): # try 5 times
@@ -30,7 +28,7 @@ def run(line,a):
             time.sleep(2) # wait 2 secs
 			
         if not html:continue # couldnt get the page, ignore
-    
+   
     soup = BeautifulSoup(html.decode('ascii', 'ignore'),'lxml') # parse the html 
     
     header=soup.find('h1', {'class':re.compile('biz-page-title')})
@@ -47,26 +45,11 @@ def run(line,a):
         ctg=ctghd.text
         f.write(ctg+'\t')
     f.write('\n')
-        #f.write(''.join(hdr)+'\n')
-        
-    #timings=soup.find('div', {'class':re.compile('column-beta')})
-    for i in range(0,7):
-        for tr in soup.find('tr')[i]:
-            tds=tr.find('td')
-            uls=tr.find('li')
-            lis=tr.find('div')
-            divs=tr.find('p')
-            print(divs.text)
-    #    timedaily='NA'
-    #    timeChunk=timing.findAll('td')
-    #    if timeChunk: timedaily=timeChunk.text
-    #    print(timedaily)
-    #    f.write(timedaily+'\n')
     
     binfos=soup.find('div', {'class':'bordered-rail'})
     binfo=binfos.find('ul', {'class':'ylist'})
     attributes=binfo.findAll('dl')
-    #print(attributes)
+    print(attributes)
     for attribute in attributes:
         #print('working')
         point,comment='NA','NA' # initialize critic and text 
@@ -81,24 +64,36 @@ def run(line,a):
         else:
             f.write(''.join(point)+'\t'+''.join(comment)+'\n') # write to file
      
-    #soup = BeautifulSoup(html.decode('ascii', 'ignore'),'lxml') # parse the html 
+    timings=soup.findAll('table', {'class':re.compile('table table-simple hours-table')})
+    for timing in timings:
+        reqd_time='NA'
+        timeChunk=timing.find('tr')
+        for tr in timeChunk:
+             hourChunk=timeChunk.find('td')
+             if hourChunk: reqd_time=hourChunk.text
+        #f.write(hourChunk[0].text)
+        #print(hourChunk)
+#    reqd_time=[]
+#    df=pd.DataFrame()
+#    #print(df)
+#    df['timings']=reqd_time
+        #print(reqd_time)
+             f.write(reqd_time+'\n')
     
     reviews=soup.findAll('div', {'class':re.compile('review--with-sidebar')}) # get all the review divs
     for review in reviews:
         #print('working')
         text='NA' # initialize critic and text 
-         
         textChunk=review.find('p',{'lang':'en'})
         if textChunk: text=textChunk.text#.encode('ascii','ignore')	
         f.write(text+'\n') # write to file
-    
 
     f.close()
 
 if __name__=='__main__':
     #i=0
     a=0
-    fw=open('link_jersey_1.txt','r')
+    fw=open('austin_links1.txt','r')
     lines=fw.readlines()
     for line in lines:
         a=a+1
@@ -107,5 +102,3 @@ if __name__=='__main__':
         run(line,a)
     fw.close()
         
-
-
