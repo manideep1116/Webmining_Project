@@ -18,20 +18,30 @@ def run(line,a):
     driver.get(line)
     
     #restaurant name
-    
-    name=driver.find_element_by_xpath("""//*[@id="wrap"]/div[2]/div/div[1]/div/div[4]/div[1]/div[1]/h1""")
-    f.write(name.text+'\n')
+    try:     
+        name=driver.find_element_by_xpath("""//*[@id="wrap"]/div[2]/div/div[1]/div/div[3]/div[1]/div[1]/h1""")
+        f.write(name.text+'\n')
+    except:
+        try:
+            name=driver.find_element_by_xpath("""//*[@id="wrap"]/div[2]/div/div[1]/div/div[4]/div[1]/div[1]/h1""")
+            f.write(name.text+'\n')
+        except:            
+            print('No restaurants!')
     
     #restaurant type
     while True:
         try:
-                                                  
-            rtype=driver.find_element_by_xpath("""//*[@id="wrap"]/div[2]/div/div[1]/div/div[4]/div[1]/div[2]/div[2]/span[2]/a["""+str(i)+"""]""")
+            rtype=driver.find_element_by_xpath("""//*[@id="wrap"]/div[2]/div/div[1]/div/div[3]/div[1]/div[2]/div[2]/span[2]/a["""+str(i)+"""]""")
             f.write(rtype.text+'\t')
             i=i+1
         except:
-            print('No further specifications!')
-            break
+            try:
+                rtype=driver.find_element_by_xpath("""//*[@id="wrap"]/div[2]/div/div[1]/div/div[4]/div[1]/div[2]/div[2]/span[2]/a["""+str(i)+"""]""")
+                f.write(rtype.text+'\t')
+                i=i+1
+            except:            
+                print('No further specifications!')
+                break
     f.write('\n')
     
     '''timings=driver.find_elements_by_css_selector("[class$=table-row__373c0__3wipe]")
@@ -90,15 +100,23 @@ def run(line,a):
      #business info and response   
     while True:
         try:
-                                                  
-            binfo=driver.find_element_by_xpath("""//*[@id="super-container"]/div[1]/div/div[2]/div[2]/div[3]/ul/li/div/dl["""+str(i)+"""]/dt""")
-            reply=driver.find_element_by_xpath("""//*[@id="super-container"]/div[1]/div/div[2]/div[2]/div[3]/ul/li/div/dl["""+str(i)+"""]/dd""")
+                                                 
+            binfo=driver.find_element_by_xpath("""//*[@id="super-container"]/div[1]/div/div[2]/div[2]/div[2]/ul/li/div/dl["""+str(i)+"""]/dt""")
+            reply=driver.find_element_by_xpath("""//*[@id="super-container"]/div[1]/div/div[2]/div[2]/div[2]/ul/li/div/dl["""+str(i)+"""]/dd""")
             if binfo.text != 'Good for Kids':
                 f.write(binfo.text+'\t'+reply.text+'\n')
             i=i+1
         except:
-            print('No further specifications!')
-            break
+            try:
+                binfo=driver.find_element_by_xpath("""//*[@id="super-container"]/div[1]/div/div[2]/div[2]/div[3]/ul/li/div/dl["""+str(i)+"""]/dt""")
+                reply=driver.find_element_by_xpath("""//*[@id="super-container"]/div[1]/div/div[2]/div[2]/div[3]/ul/li/div/dl["""+str(i)+"""]/dd""")
+                if binfo.text != 'Good for Kids':
+                    f.write(binfo.text+'\t'+reply.text+'\n')
+                i=i+1
+            except:
+                
+                print('No further specifications!')
+                break
     
     
     i=2
