@@ -144,7 +144,7 @@ def run(line,a):
 
 if __name__=='__main__':
     #i=0
-    a=751
+    a=1
     fw=open('2nd_Set.txt','r')
     lines=fw.readlines()
     for line in lines:
