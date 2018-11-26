@@ -123,10 +123,15 @@ def run(line,a):
      #reviews   
     while True:
         try:
+            try:
+                review=driver.find_element_by_xpath("""//*[@id="super-container"]/div[1]/div/div[1]/div[2]/div[2]/div[2]/ul/li["""+str(i)+"""]/div/div[2]/div[1]/p""")
+                f.write(review.text+'\n')
+                i=i+1
+            except:
                                                   
-            review=driver.find_element_by_xpath("""//*[@id="super-container"]/div[1]/div/div[1]/div[3]/div[2]/div[2]/ul/li["""+str(i)+"""]/div/div[2]/div[1]/p""")
-            f.write(review.text+'\n')
-            i=i+1
+                review=driver.find_element_by_xpath("""//*[@id="super-container"]/div[1]/div/div[1]/div[3]/div[2]/div[2]/ul/li["""+str(i)+"""]/div/div[2]/div[1]/p""")
+                f.write(review.text+'\n')
+                i=i+1
         except:
             print('No further specifications!')
             break
@@ -139,8 +144,8 @@ def run(line,a):
 
 if __name__=='__main__':
     #i=0
-    a=0
-    fw=open('link_jersey.txt','r')
+    a=751
+    fw=open('2nd_Set.txt','r')
     lines=fw.readlines()
     for line in lines:
         a=a+1
