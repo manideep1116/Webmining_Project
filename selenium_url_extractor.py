@@ -12,7 +12,7 @@ import time
 def runforpage(line):
 #find all elements with a class that ends in 'tweet-text'
 #tweets=driver.find_element_by_css_selector("[class$=headerTitle]")
-    driver = webdriver.Chrome('chromedriver.exe')
+    driver = webdriver.Chrome('./chromedriver')
     driver.get(line)
     #tweet=driver.find_element_by_xpath("""//*[@id="wrap"]/div[3]/div[2]/div[1]/div/div/div[1]/p""")
     tweet=driver.find_element_by_xpath("""//*[@id="wrap"]/div[3]/div[2]/div[2]/div/div[1]/div[1]/div/div[2]/div[1]/span""")
@@ -36,7 +36,7 @@ def run(line,pgnm,fact):
     close=False
     #a='https://www.yelp.com'
     
-    driver = webdriver.Chrome('chromedriver.exe')
+    driver = webdriver.Chrome('./chromedriver')
     
     f=open('Memphis.txt','w') # output file
     prev=''
